@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Events
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="{% url 'list-events' %}">Events</a></li>
+              {% if user.is_authenticated %}                                              <!--THIS WILL MAKE ADD EVENT LINK AVAILABLE FOR ONLY LOGGED IN USERS -->
+              <li><a class="dropdown-item" href="{% url 'add-event' %}">Add Event</a></li>
+              <li><a class="dropdown-item" href="{% url 'events_mine' %}">My Events</a></li>
+              {% endif %}
+            </ul>
+          </div>
+                                    <!--<li class="nav-item">
+                                      <a class="nav-link" href="{% url 'list-events' %}">Events</a>
+                                    </li>                                              THIS WILL APPEAR IN NAVBAR WITHOUT DROPDOWN
+                                    <li class="nav-item">
+                                      <a class="nav-link" href="{% url 'add-event' %}">Add Event</a>
+                                    </li>-->
+          <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Venues
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="{% url 'list-venue' %}">Venues</a></li>
+              {% if user.is_authenticated %}                                            <!--THIS WILL MAKE ADD EVENT LINK AVAILABLE FOR ONLY LOGGED IN USERS -->
+              <li><a class="dropdown-item" href="{% url 'add-venue' %}">Add Venue</a></li>
+              {% endif %}
+            </ul>
+          </div>
+                                    <!--<li class="nav-item">
+                                      <a class="nav-link" href="{% url 'list-venue' %}">Venues</a>
+                                    </li>         
+                                    <li class="nav-item">
+                                      <a class="nav-link" href="{% url 'add-venue' %}">Add Venue</a>
+                                    </li>-->
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout_user' %}">Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login_user' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register_user' %}">Register</a>
+            </li>
+          {% endif %}
+        </ul>
+        <form class="d-flex" role="search" method="POST" action="{% url 'search-results' %}">
+          {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
+          <button class="btn btn-outline-secondary" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>

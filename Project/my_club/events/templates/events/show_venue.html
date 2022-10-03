@@ -1,0 +1,14 @@
+{% extends 'events/base.html' %}
+
+
+{% block content %}
+    <center>
+    <h1> {{ venue }}!  </h1><br/><br/>
+        {{ venue.address }}<br/>
+        {{ venue.zip_code }}<br/>
+        {{ venue.phone }}<br/>
+        <a href="{% url {{ venue.web }}"> {{ venue.web }}</a><br/>
+        {{ venue.email_address }}<br/>
+    </center>                                                      
+{% endblock %}
+   

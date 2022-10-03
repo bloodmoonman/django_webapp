@@ -1,0 +1,40 @@
+{% extends 'events/base.html' %}
+
+
+{% block content %}
+    {% csrf_token %}
+        {% if searched %}
+            <center>
+            <h4>Searched: {{ searched }}</h4><br/>
+            <br/>
+            {% for result in results_ven %}
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ result }}</h5>
+                </div>
+                {% if result.address %}            <!--THESE IF STATEMENTS MAKE SURE THESE FIELDS EXIST OTHERWISE DOESNT SHOW ON THE PAGE AS BLANK -->
+                    {{ result.address }}</br>
+                {% endif %}
+                {% if result.zip_code %}
+                    {{ result.zip_code }}</br>
+                {% endif %}
+                {% if result.phone %}
+                    {{ result.phone }}</br>
+                {% endif %}
+                {% if result.web %}
+                    <a href="{% url {{ result.web }}"> {{ result.web }}</a><br/>
+                {% endif %}
+                {% if result.email_address %}
+                    {{ venue.email_address }}<br/>
+                {% endif %}
+            </div>
+            {% endfor %}
+            
+        {% else %}
+            <h4>Hey! You Forgot to Search...    </h4>
+        {% endif %}
+
+        </center>
+{% endblock %}
+   

@@ -1,0 +1,52 @@
+{% extends 'events/base.html' %}
+
+
+{% block content %}
+<center>    
+
+        <strong>  <h3>Venues</h3>  </strong> <h5 align="right"><a href="{% url 'venue_pdf' %}">Download Venue List</a></h5>
+
+        {% for venue in venues %}
+        <table class="table" border="2">
+          <tbody>
+            <tr>
+              <td align="center"><a href="{% url 'show-venue' venue.id %}" class="page-link">{{ venue }}</a></td>
+                {% if user.is_authenticated %}
+                  <td><a href="{% url 'update-venue' venue.id %}" class="btn btn-secondary btn-sm">Update</a></td>
+                  <td><a href="{% url 'delete-venue' venue.id %}" class="btn btn-danger btn-sm">Delete</a></td>
+                {% endif %}
+            </tr>
+          </tbody>
+        </table>
+        {% endfor %} 
+    </table>
+</center>
+<br><br>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+{% if venues.has_previous %} <!--SO IF THERE'S A PREVIOUS PAGE WE WANT TO CLICK THAT -->
+    <li class="page-item"><a class="page-link" href="?page=1">&laquo; First</a></li> <!--THIS WILL BE A LINK FOR PAGE ONE -->
+    <li class="page-item"><a class="page-link" href="?page={{ venues.previous_page_number }}">Previous</a></li> <!--SO THIS IS FOR PREVIOUS PAGE -->
+{% endif %}
+
+<li class="page-item disabled"><a href="#" class="page-link">Page {{ venues.number }} of {{ venues.paginator.num_pages}}</a></li>
+ <!--THIS WILL MEAN FOR INSTANCE; PAGE 1 of 100--- NUMBERS WOULD BE BETTER -->
+
+{% if venues.has_next %} <!--THIS IS FOR NEXT PAGES-->
+  <li class="page-item"><a class="page-link" href="?page={{ venues.next_page_number }}">Next</a></li>
+  <li class="page-item"><a class="page-link" href="?page={{ venues.paginator.num_pages }}">Last &raquo;</a></li>
+{% endif %}
+
+  </ul>
+</nav>
+
+{% endblock %}
+
+
+
+
+
+
+   

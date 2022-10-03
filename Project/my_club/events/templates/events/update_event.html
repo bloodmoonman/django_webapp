@@ -1,0 +1,23 @@
+{% extends 'events/base.html' %}
+
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        {% if user == event.manager %} <!--Checks if the logged in user equals to that specific event's manager, if yes grants access to update the event.-->
+        <center>
+            <h3>Update Event</h3>
+            <form action="" method=POST> 
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Update" class="btn btn-dark btn-sm">
+            </form>
+        </center>
+        {% else %}
+            <h4>Access Denied</h4><br>
+            <p>Only Event Manager Can Update The Event!</p>
+            Event Manager: {{ event.manager }}
+        {% endif %}       
+    {% endif %}   
+{% endblock %}
+   

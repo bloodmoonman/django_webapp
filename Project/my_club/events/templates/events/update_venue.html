@@ -1,0 +1,28 @@
+{% extends 'events/base.html' %}
+
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == venue.owner %} 
+
+        <center>
+            <h3>Update Venue</h3>
+            <form action="" method=POST> 
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <input type="submit" value="Update" class="btn btn-dark btn-sm">
+            </form>
+        </center>
+        {% else %}
+            <h3>Only Owner of the Venue Can Update!</h3><br>
+            <a href="{% url 'home' %}" class="btn btn-dark btn-sm">Return Home</a>
+        {% endif %}
+    {% else %}
+        <h3>You Need to Log In To Access!</h3>
+        <a href="{% url 'login' %}">Login Here</a>
+    {% endif %}
+{% endblock %}
+   

@@ -1,0 +1,14 @@
+
+
+  {% extends 'events/base.html' %}
+
+
+{% block content %}
+    {% csrf_token %}
+
+        <form action="{% url 'search_results' %}" method="get">
+            <input name="q" type="text" placeholder="Search...">
+        </form>
+
+{% endblock %}
+   

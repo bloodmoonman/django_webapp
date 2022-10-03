@@ -1,0 +1,16 @@
+{% extends 'events/base.html' %}
+
+
+{% block content %}
+<div class="shadow p-4 mb-5 bg-body rounded">   
+    <h4><strong>Register</strong></h4><br>
+    <form  action="{% url 'register_user' %}" method="POST">
+
+        {% csrf_token %}
+
+            {{ form.as_p }}               <!-- it is form because we passed the "form" variable with context dictionary in views.py -->
+            <input type="submit" value="Register" class="btn btn-dark btn-sm">
+    </form>
+</div>
+{% endblock %}
+   
