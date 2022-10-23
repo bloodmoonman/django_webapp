@@ -15,8 +15,8 @@ create a virtual environment and activate
 
 ## Features
 
-Add, update, delete events and venues, by the authorized users.
-\nSearch events.
+Add, update, delete events and venues, by the authorized users. <br/>
+Search events.
 ## Tech Stack
 Django
 
