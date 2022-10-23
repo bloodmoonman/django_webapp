@@ -1,6 +1,3 @@
-# django_webapp
-working with databases, files, users, authentication, search, adding, deleting etc.
-
 
 Django Webapp
 
