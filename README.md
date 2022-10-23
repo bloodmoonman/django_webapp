@@ -1,7 +1,9 @@
 
 Django Webapp
 
-A website for nearby events, authentication for updating, deleting for events' hosts.\nSearching through databases, validation, pagination etc.
+A website for nearby events, authentication for updating, deleting for events' hosts. <br/> Searching through databases, validation, pagination etc.
+Users can login and logout, if they're the manager of the event then they can perform updating, deleting the specific event.
+Using different forms to differentiate users and superusers.
 
 
 ## Installation
