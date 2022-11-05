@@ -34,12 +34,12 @@ def register_user(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']  
                                                        
-            user = authenticate(username=username, password=password) #WE AUTHENTICATE THE USER
+            user = authenticate(username=username, password=password) #AUTHENTICATE THE USER
             login(request, user)  #LOGS IN THE USER
             messages.success(request, ('Registered!'))
             return redirect('home')
     else:   #THIS MEANS, THEY DIDN'T FILL OUT THE FORM SO WE WANT TO SHOW THEM THE FORM ITSELF.
-        form = RegisterUserForm() #WE JUST WANT THE PLAIN FORM, NOT FILLED OUT FORM. SO () IS EMPTY
+        form = RegisterUserForm() 
 
     return render(request, 'members/register_user.html', {'form': form, })
 
