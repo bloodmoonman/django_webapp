@@ -5,10 +5,10 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('<int:year>/<str:month>', views.home, name='home'),  #THIS '<int....', can be directed to anywhere but as you can see we chose to direct it to home page.
+    path('<int:year>/<str:month>', views.home, name='home'), 
     path('event_list', views.all_events, name='list-events'),
-    path('add_venue', views.add_venue, name='add-venue'),       #SO THE FIRST ONE IS THE HTML FILE'S NAME AND IT IS THE www.aykan.com/add_venue PART
-    path('list_venue', views.list_venue, name='list-venue'),    #views.add_venue POINTS OUT THE METHOD OF THIS PAGE. IT IS A WAY TO RENDER. A MIDDLEMAN BETWEEN URLS.PY AND HTML, IN A WAY.
+    path('add_venue', views.add_venue, name='add-venue'),      
+    path('list_venue', views.list_venue, name='list-venue'),    #v
     path('show_venue/<venue_id>', views.show_venue, name='show-venue'),
     path('results', views.results, name='search-results'),
     path('update_venue/<venue_id>', views.update_venue, name='update-venue'),
@@ -39,4 +39,4 @@ urlpatterns = [
                                 #AND THAT HOME FUNCTION IS RENDERS THE REQUEST. BECAUSE IT HAS ALL THE VALUES, HTML FILES ETC. IT IS THE BRIDGE BETWEEN DATABASE, HTML, AND WEBPAGE
                                 #FOR INSTANCE WHEN USER ENTERS THE FOLLOWING URL; www.aykan.com/2022/June THESE 2022 AND JUNE ARE VALUES THAT WILL BE PASSED
                                 # AS PARAMETERS IN VIEWS.HOME FUNCTION SO THAT FUNCTION WILL USE THOSE AS ARGUMENTS INSIDE OF THE CONTEXT DICT.
-                                # 
+                                
