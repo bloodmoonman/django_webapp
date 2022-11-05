@@ -110,46 +110,41 @@ def add_event(request):
 
 def update_venue(request, venue_id):
     venue = Venue.objects.get(pk=venue_id)
-    form = VenueForm(request.POST or None, instance=venue) #WHENEVER YOU GO TO WEBPAGE, YOURE REQUESTING THE PAGE. YOU'RE EITHER TRYING TO GET THE PAGE TO LOOK AT IT. 
-                                                           #OR YOURE TRYING TO POST TO THE PAGE.
-                                               #SO request.POST or None means if they're gonna POST use this VenueForm otherwise don't.
-                                               #WE NEED INSTANCE instance=venue MEANS WE JUST WANT TO PUT ALL OF THE STUFF FROM Venue variable to form, FOR EXAMPLE IF I CHANGE instance=None
-                                               #THE FORM WHEN I CLICK THE UPDATE WILL BE EMPTY, JUST TRIED. 
+    form = VenueForm(request.POST or None, instance=venue) 
+                                              
     if form.is_valid():    #CHECKS IF THE USER INPUT IS VALID
         form.save()        #THEN WE SAVE IT TO DATABASE
         return redirect('list-venue') #WE USE name='' VAR IN URLS.PY WHEN WE USE REDIRECT
     return render(request, 'events/update_venue.html', {'venue': venue,'form': form, })
 
 def results(request):
-    if request.method == "POST":    #THIS ASKS, DID THE USER SENT A FORM? MEANING THAT DID THEY FILL OUT THE SEARCH BAR AND PRESSED THE BUTTON AND POSTED THE FORM?
-        searched = request.POST['searched']  #THIS GETS THAT POST AND ASSIGNS INTO A VARIABLE CALLED searched. A FORM IS BEING 'POST'ED BY USER SO WE ARE GETTING THAT VALUE AND ASSIGN IT INTO searched VARIABLE.
+    if request.method == "POST": 
+        searched = request.POST['searched']  
         results_ven = Venue.objects.filter(name__contains=searched)
-        return render(request, 'events/search.html', {'searched': searched, 'results_ven': results_ven,})   #I WAS GETTING AN MULTITYPEDICT KIND OF AN ERROR. AND IT POINTED OUT THE searched SO, WHAT I MISSED
-    else:                                                                          #WAS THAT name='searched' in NAVBAR!!! PAY ATTENTION THIS ONE BELOW;
-        return render(request, 'events/search.html', {})                           #<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="searched">
+        return render(request, 'events/search.html', {'searched': searched, 'results_ven': results_ven,})   
+    else:                                                                         
+        return render(request, 'events/search.html', {})                          
                                                         
                                                         
 
 
-                                                                                   #SO THIS name='searched' WE GAVE A NAME TO WHATEVER USER SEARCH(PUT INTO THAT FIELD AND PRESS ENTER OR WHATEVER THEY POSTS)
-def show_venue(request, venue_id):
+                                                                                  
     venue = Venue.objects.get(pk=venue_id)
     return render(request, 'events/show_venue.html', {'venue': venue,})
     
 
 def list_venue(request):
-    #venue_list = Venue.objects.all().order_by('name') #WE CAN COMMENT THIS OUT BECAUSE WE ALREADY PASS THE INFOS WITH p 
-    p = Paginator(Venue.objects.all().order_by('name'), 2) #WE WANT TO PAGINATE ALL OF THIS STUFF - 2 MEANS 2 VENUES WILL SHOW UP PER PAGE
-    page = request.GET.get('page')        #WE NEED TO TRACK THE PAGES, ANYTIME SOMEONE GOES TO A WEBPAGE, THEY'RE REQUESTING THAT PAGE, GETTING THAT PAGE.
+    p = Paginator(Venue.objects.all().order_by('name'), 2)
+    page = request.GET.get('page')       
     venues = p.get_page(page)
     return render(request, 'events/venue.html', {'venues': venues,})
 
 def add_venue(request):
-    submitted = False  #SO WHEN EVER PAGE IS LOADED. WE WANT TO SET SUBMITTED TO FALSE, BECAUSE WE WILL DETERMINE WHETHER THEY SUBMITTED OR NOT, SO WON'T SUBMIT AGAIN.
-    if request.method == "POST":  #METHOD REFERANCING <form action"" method=POST> in add_venue.html 
+    submitted = False  
+    if request.method == "POST":
         form = VenueForm(request.POST)
-        if form.is_valid():    #CHECKS IF THE USER INPUT IS VALID
-            #form.save()        #THEN WE SAVE IT TO DATABASE
+        if form.is_valid():   
+
             venue = form.save(commit=False)
             venue.owner = request.user.id
             venue.save()
@@ -170,19 +165,12 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime("%B"))
         year,
         month_number,
     )
-    event_list = Event.objects.filter(date__year = year, date__month = month_number)  #THIS IS date THEN __year BECAUSE WE HAVE A FIELD date IN MODELS.PY, AND __year ALSO BUILT-IN SEARCH FOR DJANGO
-    now = datetime.now()                                                              # =year IS THE PARAMETER WE ARE PASSING TO FUNCTION. FOR INSTANCE I CHANGED IT INTO ayear AND IT WORKED.
+    event_list = Event.objects.filter(date__year = year, date__month = month_number)  
+    now = datetime.now()                                                             
     current_year = now.year
 
     return render(request, 'events/home.html', {"name": name, "last_name": last_name, "year": year, "month": month, "month_number": month_number, "cal": cal, "current_year": current_year, "event_list": event_list})
-                                              #THIS home.html is pointing to a website, a html file, so we need to create the home.html
-                                              #AND THE {} ARE CONTEXT DICTIONARY, THIS ALLOWS US TO PASS THINGS FROM BACKEND TO FRONTEND OF THE WEBPAGE.
-                                              #IF YOU ADD FOR INSTANCE NAME inside of the home function like; name = 'Aykan'
-                                              #THEN YOU ADD THAT INTO CONTEXT DICT. {'name': name}   LEFT ONE CAN BE CALLED SOMETHING ELSE BUT THE RIGHT ONE THE VALUE HAS TO BE 
-                                              # THE SAME
-                                              #WHEN YOU ADD THINGS IN THE CONTEXT DICT. YOU NEED THEM TO BE INSIDE OF THE HTML(THE WEB PAGE) SO  YOU ADD THEM IN HTML FILES TOO
-                                              # YOU CAN ADD THEM USING {{ name }}  SYNTAX, LIKE, <h1>Hello {{ name }}!</h1> IT WILL APPEAR ON THE WEBPAGE, IF YOU ADD IT ON HOME.HTML
-                                              #THEN IT WILL APPEAR ON THE HOME PAGE, AND SO ON. YOU SHOULD GET THE IDEA BY NOW.
+
 
 
 
