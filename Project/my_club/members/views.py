@@ -22,18 +22,18 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.success(request, ("Logged Out!")) 
-    return redirect('home') #WE CAN REFERENCE 'home' BECAUSE IN EVENTS APP URLS.PY WE HAVE PATH FOR IT TO LINK TO HOME PAGE AS 'home'
+    return redirect('home') 
     
 
 def register_user(request):
-    if request.method == "POST":   #AGAIN THIS MEANS: IF SOMEONE FILLED OUT THE FORM DO SOMETHING, OTHERWISE JUST SHOW THE PAGE SO THEY CAN FILL OUT THE FORM.
-        form = RegisterUserForm(request.POST) #WITH THIS, WE DESIGNATE THE FORM WE WANT TO USE, WE USE THE THING WE IMPORTED
-                                              #SO IF USER FILLED OUT THE FORM, WE WANT TO PASS THAT IN TO UserCreationForm AND STORE IT IN THE "FORM" VARIABLE.
+    if request.method == "POST": 
+        form = RegisterUserForm(request.POST)
+                                            
         if form.is_valid():
             form.save()
             username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']  #THE REASON OF 1, BECAUSE THERE IS ALWAYS TWO WAY OF CONFIRMATION OF PASSWORDS WHEN YOU REGISTER
-                                                       #TO CONTROL YOU TYPE TO SAME THING.
+            password = form.cleaned_data['password1']  
+                                                       
             user = authenticate(username=username, password=password) #WE AUTHENTICATE THE USER
             login(request, user)  #LOGS IN THE USER
             messages.success(request, ('Registered!'))
